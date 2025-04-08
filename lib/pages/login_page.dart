@@ -61,7 +61,7 @@ class _LoginPageState extends State<LoginPage> {
   Widget _headerText() {
     return SizedBox(
       width: MediaQuery.sizeOf(context).width,
-      child: const Column(
+      child: Column(
         mainAxisSize: MainAxisSize.max,
         mainAxisAlignment: MainAxisAlignment.start,
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -69,16 +69,14 @@ class _LoginPageState extends State<LoginPage> {
           Text(
             "Hi, Welcome Back",
             style: TextStyle(
-              fontSize: 20,
-              fontWeight: FontWeight.w600,
-            ),
+                fontSize: 20, fontWeight: FontWeight.w600, color: Colors.blue),
           ),
           Text(
             "Hello again, you've been missed",
             style: TextStyle(
               fontSize: 15,
               fontWeight: FontWeight.w500,
-              color: Colors.grey,
+              color: Colors.grey.shade600,
             ),
           )
         ],
@@ -130,12 +128,18 @@ class _LoginPageState extends State<LoginPage> {
     return SizedBox(
       width: MediaQuery.sizeOf(context).width,
       child: MaterialButton(
+        color: Theme.of(context).colorScheme.primary,
         onPressed: () async {
           if (_loginFormKey.currentState?.validate() ?? false) {
             _loginFormKey.currentState?.save();
             bool result = await _authService.login(email!, password!);
             if (result) {
-              print("Login successful");
+              // print("Login successful");
+              _alertService.showToast(
+                text: "Successfully logged in:",
+                icon: Icons.check_circle,
+                iconColor: Colors.green,
+              );
               _navigationService.pushReplacementNamed("/home");
             } else {
               _alertService.showToast(
@@ -145,7 +149,6 @@ class _LoginPageState extends State<LoginPage> {
             }
           }
         },
-        color: Theme.of(context).colorScheme.primary,
         child: const Text(
           "Login",
           style: TextStyle(
@@ -164,15 +167,16 @@ class _LoginPageState extends State<LoginPage> {
         crossAxisAlignment: CrossAxisAlignment.end,
         children: [
           const Text("Dont't have an account?"),
+          SizedBox(
+            width: 4,
+          ),
           GestureDetector(
             onTap: () {
               _navigationService.pushNamed('/register');
             },
             child: const Text(
               "Sign Up",
-              style: TextStyle(
-                fontWeight: FontWeight.w600,
-              ),
+              style: TextStyle(fontWeight: FontWeight.w600, color: Colors.blue),
             ),
           ),
         ],

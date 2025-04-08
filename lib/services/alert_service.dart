@@ -16,6 +16,7 @@ class AlertService {
   void showToast({
     required String text,
     IconData icon = Icons.info,
+    Color iconColor = Colors.black,
   }) {
     try {
       DelightToastBar(
@@ -26,6 +27,7 @@ class AlertService {
               leading: Icon(
                 icon,
                 size: 28,
+                color: iconColor,
               ),
               title: Text(
                 text,

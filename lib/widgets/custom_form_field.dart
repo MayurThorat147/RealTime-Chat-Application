@@ -18,6 +18,26 @@ class CustomFormField extends StatelessWidget {
     this.obscureText = false,
   });
 
+  Icon? _getPrefixIcon() {
+    if (hintText.toLowerCase().contains("email")) {
+      return const Icon(
+        Icons.email,
+        color: Colors.red,
+      );
+    } else if (hintText.toLowerCase().contains("password")) {
+      return const Icon(
+        Icons.key,
+        color: Colors.green,
+      );
+    } else if (hintText.toLowerCase().contains("name")) {
+      return const Icon(
+        Icons.person,
+        color: Colors.blue,
+      );
+    }
+    return null;
+  }
+
   @override
   Widget build(BuildContext context) {
     return SizedBox(
@@ -33,7 +53,18 @@ class CustomFormField extends StatelessWidget {
         },
         decoration: InputDecoration(
           hintText: hintText,
-          border: const OutlineInputBorder(),
+          prefixIcon: _getPrefixIcon(),
+          border: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(30),
+          ),
+          enabledBorder: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(30),
+            borderSide: const BorderSide(color: Colors.grey),
+          ),
+          focusedBorder: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(30),
+            borderSide: const BorderSide(color: Colors.blue),
+          ),
         ),
       ),
     );

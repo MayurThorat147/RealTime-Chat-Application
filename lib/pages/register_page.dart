@@ -80,7 +80,7 @@ class _RegisterPageState extends State<RegisterPage> {
   Widget _headerText() {
     return SizedBox(
       width: MediaQuery.sizeOf(context).width,
-      child: const Column(
+      child: Column(
         mainAxisSize: MainAxisSize.max,
         mainAxisAlignment: MainAxisAlignment.start,
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -90,6 +90,7 @@ class _RegisterPageState extends State<RegisterPage> {
             style: TextStyle(
               fontSize: 20,
               fontWeight: FontWeight.w600,
+              color: Colors.blue,
             ),
           ),
           Text(
@@ -97,7 +98,7 @@ class _RegisterPageState extends State<RegisterPage> {
             style: TextStyle(
               fontSize: 15,
               fontWeight: FontWeight.w500,
-              color: Colors.grey,
+              color: Colors.grey.shade600,
             ),
           )
         ],
@@ -164,21 +165,52 @@ class _RegisterPageState extends State<RegisterPage> {
   }
 
   Widget _pfpSelectionField() {
-    return GestureDetector(
-      onTap: () async {
-        File? file = await _mediaService.getImageFromGallery();
-        if (file != null) {
-          setState(() {
-            selectedImage = file;
-          });
-        }
-      },
-      child: CircleAvatar(
-        radius: MediaQuery.of(context).size.width * 0.15,
-        backgroundImage: selectedImage != null
-            ? FileImage(selectedImage!)
-            : NetworkImage(PLACEHOLDER_PFP) as ImageProvider,
-      ),
+    return Stack(
+      alignment: Alignment.bottomRight,
+      children: [
+        GestureDetector(
+          onTap: () async {
+            File? file = await _mediaService.getImageFromGallery();
+            if (file != null) {
+              setState(() {
+                selectedImage = file;
+              });
+            }
+          },
+          child: CircleAvatar(
+            radius: MediaQuery.of(context).size.width * 0.15,
+            backgroundImage: selectedImage != null
+                ? FileImage(selectedImage!)
+                : NetworkImage(PLACEHOLDER_PFP) as ImageProvider,
+          ),
+        ),
+        // Camera icon overlay
+        GestureDetector(
+          onTap: () async {
+            File? file = await _mediaService.getImageFromGallery();
+            if (file != null) {
+              setState(() {
+                selectedImage = file;
+              });
+            }
+          },
+          child: Container(
+            decoration: BoxDecoration(
+              shape: BoxShape.circle,
+              color: Colors.white,
+              border: Border.all(color: Colors.blue, width: 2),
+            ),
+            child: Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Icon(
+                Icons.camera_alt,
+                color: Colors.blue,
+                size: 16,
+              ),
+            ),
+          ),
+        ),
+      ],
     );
   }
 
@@ -254,9 +286,10 @@ class _RegisterPageState extends State<RegisterPage> {
               _navigationService.goBack();
             },
             child: const Text(
-              "LogIn",
+              "Log In",
               style: TextStyle(
                 fontWeight: FontWeight.w600,
+                color: Colors.blue,
               ),
             ),
           ),

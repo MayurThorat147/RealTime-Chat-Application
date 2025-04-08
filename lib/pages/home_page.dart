@@ -48,6 +48,7 @@ class _HomePageState extends State<HomePage> {
                 _alertService.showToast(
                   text: "Successfully logged out:",
                   icon: Icons.check_circle,
+                  iconColor: Colors.green,
                 );
                 _navigationService.pushReplacementNamed("/login");
               }

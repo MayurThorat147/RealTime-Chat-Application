@@ -42,6 +42,7 @@ class MyApp extends StatelessWidget {
       ),
       initialRoute: _authService.user != null ? "/home" : "/login",
       routes: _navigationService.routes,
+      debugShowCheckedModeBanner: false,
     );
   }
 }
